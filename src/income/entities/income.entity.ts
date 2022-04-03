@@ -5,6 +5,7 @@ import {
   BeforeInsert,
   BeforeUpdate,
   CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -24,8 +25,6 @@ export class Income {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
-  @BeforeInsert()
-  @BeforeUpdate()
+  @UpdateDateColumn()
   updatedAt: Date;
 }

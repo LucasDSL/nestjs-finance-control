@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { IncomeService } from './income.service';
 import { CreateIncomeDto } from './dto/create-income.dto';
@@ -24,7 +25,10 @@ export class IncomeController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Query() query) {
+    if (query.description) {
+      return this.incomeService.findByDescription(query.description);
+    }
     return this.incomeService.findAll();
   }
 

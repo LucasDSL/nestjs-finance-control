@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateIncomeDto } from './dto/create-income.dto';
 import { UpdateIncomeDto } from './dto/update-income.dto';
 import { Income } from './entities/income.entity';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 @Injectable()
 export class IncomeService {
@@ -38,6 +38,12 @@ export class IncomeService {
 
   findOne(id: string) {
     return this.IncomeRepository.findOne({ id });
+  }
+
+  findByDescription(description: string) {
+    return this.IncomeRepository.find({
+      where: { description: ILike(`%${description}%`) },
+    });
   }
 
   async update(id: string, updateIncomeDto: UpdateIncomeDto) {
