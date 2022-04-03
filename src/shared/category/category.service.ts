@@ -7,10 +7,14 @@ import { Category } from './category.entity';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private readonly CategoryRepo: Repository<Category>,
+    private CategoryRepo: Repository<Category>,
   ) {}
 
   findIdByName(name: string) {
     return this.CategoryRepo.findOne({ name }, { select: ['id'] });
+  }
+
+  create(name: string) {
+    return this.CategoryRepo.save({ name });
   }
 }
