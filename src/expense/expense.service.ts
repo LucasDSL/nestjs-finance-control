@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { UpdateExpenseDto } from './dto/update-expense.dto';
 import { Expense } from './entities/expense.entity';
@@ -38,6 +38,12 @@ export class ExpenseService {
 
   findOne(id: string) {
     return this.ExepenseRepository.findOne({ id });
+  }
+
+  findByDescription(description: string) {
+    return this.ExepenseRepository.find({
+      where: { description: ILike(`%${description}%`) },
+    });
   }
 
   async update(id: string, updateExpenseDto: UpdateExpenseDto) {
